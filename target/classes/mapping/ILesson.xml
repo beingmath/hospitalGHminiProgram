@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ILesson">
+    <select id="selectLesson" resultType="com.example.demo.entity.Lesson" parameterType="com.example.demo.entity.Lesson">
+        select * from lesson where teachername = #{teachername}
+    </select>
+  <insert id="insertLesson" parameterType="com.example.demo.entity.Lesson">
+ insert into lesson(teachername,lessonName,department,major,lessonIntrodution,imageurl) values (#{teachername},#{lessonName},#{department},#{major},#{lessonIntrodution},#{imageurl})
+ </insert>
+     <select id="selectLessonById" resultType="com.example.demo.entity.Lesson" parameterType="Integer">
+        select * from lesson where id = #{id} 
+    </select>
+      <select id="selectLessonBySearchMsg" resultType="com.example.demo.entity.Lesson" parameterType="String">
+        select * from lesson where lessonName like '%${lessonName}%' 
+    </select>
+    <select id="selectLessonByStudentname" resultType="com.example.demo.entity.Lesson" parameterType="String">
+       select * from lesson where id in (select lessonid from student_lesson where studentname=#{studentname});
+    </select>
+</mapper>

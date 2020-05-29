@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HOMEWORK  SYSTEM</title>
+<script src="jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+<div class="login-form">
+<h1>HOMEWORK  SYSTEM</h1>
+<div class="txtb">
+<input type="text" name="username" id="name">
+<span data-placeholder="Username"></span>
+</div>
+<div class="txtb">
+<input type="password" name="password" id="pwd">
+<span data-placeholder="Password" ></span>
+</div>
+<div class="roles">
+        role：<select name="role" class="role" id="role">
+  <option value="teacher">teacher</option>
+  <option value="student">student</option>
+</select>
+</div></br>
+<input type="submit"  class="logbtn" value="Sign Up" onclick="checkname()">
+<input type="reset" class="Resbtn" value="Reset" onclick="reset()">
+<br>
+<span id="msg"></span>
+</div>
+<div class="mask_bg"></div>
+</body>
+<script>
+$(".txtb input").on("focus",function(){
+	$(this).addClass("focus");
+});
+$(".txtb input").on("blur",function(){
+	if($(this).val()=="")
+	$(this).removeClass("focus");
+});
+function reset(){
+	var xinxi=document.getElementsByTagName("input");
+	for(var i=0;i<2;i++){
+		xinxi[i].value="";
+	}
+}
+function checkname(){
+	var xml=new XMLHttpRequest();
+	var name=document.getElementById("name").value;
+	var pwd=document.getElementById("pwd").value;
+	var role=$("#role option:selected").val();
+	xml.open("POST","Register?name="+name+"&pwd="+pwd+"&role="+role);
+	xml.send(null);
+	xml.onreadystatechange=function(){
+	 if(xml.readyState==4&&xml.status==200){
+		 if(xml.responseText=="true"){
+			 alert("注册成功,返回登录页面");
+			 window.location.href="index.html";
+		 }else if(xml.responseText=="false"){
+			 var msg=document.getElementById("msg");
+			 msg.innerHTML="已被注册"; 
+		 }else{
+			 var msg=document.getElementById("msg");
+			 msg.innerHTML="账号或密码不能为空哦";  
+		 }
+	 }
+	}
+}
+</script>
+</html>

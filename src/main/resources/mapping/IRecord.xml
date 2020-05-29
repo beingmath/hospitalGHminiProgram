@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IRecord">
+     <select id="selectRecord" resultMap="recordMap" parameterType="String">
+       SELECT * FROM record r,doctor d where r.doctorid=d.id and r.openid=#{openid};
+    </select>
+    <select id="selectAllRecord" resultMap="recordMap">
+        SELECT * FROM record r,doctor d where r.doctorid=d.id;
+    </select>
+    <delete id="deleteRecord" parameterType="Integer">
+        delete from record where id=#{id}
+    </delete>
+    <resultMap type="Record" id="recordMap">
+        <id property="id" column="id"/>
+        <result property="openid" column="openid"/>
+        <result property="patientName" column="patientName"/>
+        <result property="doctorid" column="doctorid"/>
+        <result property="phone" column="phone" />
+        <result property="birth" column="birth" />
+        <result property="time" column="time" />
+        <association property="doctor" javaType="com.example.demo.entity.Doctor">
+            <id property="id" column="doctorid"/>
+            <result property="major" column="major"/>
+            <result property="name" column="name"/>
+            <result property="price" column="price"/>
+            <result property="office" column="office"/>
+            <result property="png" column="png"/>
+            <result property="intro" column="intro"/>
+        </association>
+    </resultMap>
+
+
+  <insert id="insertRecord" parameterType="com.example.demo.entity.Record">
+ insert into record(openid,doctorid,patientName,phone,birth,time) values (#{openid},#{doctorid},#{patientName},#{phone},#{birth},#{time})
+ </insert>
+  <select id="selectMateCourse" resultMap="course_teacher" parameterType="Integer">
+      SELECT * FROM mate_course mc,course c where mc.courseid=c.id and mc.mateid='4';
+    </select>
+    <resultMap type="com.example.demo.entity.Course_teacher" id="course_teacher" >
+ <result property="name" column="name"/>
+ <result property="userid" column="userid"/>
+ <result property="school" column="school"/>
+ <result property="zy" column="zy"/>
+ <result property="bj" column="bj"/>
+ </resultMap>
+</mapper>

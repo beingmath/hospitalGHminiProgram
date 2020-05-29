@@ -1,0 +1,19 @@
+<view class="content">
+  <view class="bg">
+  <button  bindgetuserinfo='isGetinfo'   style='width:200rpx;color:#999;display:{{isShow?"block":"none"}}' open-type='getUserInfo'>请先登录</button>
+    <view class="head">
+       <view class="headIcon">
+          <image src="{{userInfo.avatarUrl}}" style="width:70px;height:70px;border-radius:50px;float:left"></image>
+       </view>
+       <view class="login" style="float:left;line-height:80px">
+          {{userInfo.nickName}}
+       </view>
+    
+    </view>
+</view>
+
+<view class="record" style="line-height:80rpx" bindtap="torecord">
+<image src="../../images/re.png" style="height:80rpx;width:80rpx"></image>
+挂号记录
+</view>
+</view>

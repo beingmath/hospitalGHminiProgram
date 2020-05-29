@@ -1,0 +1,53 @@
+.log-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+.log-item {
+  margin: 10rpx;
+}
+.doctors{
+  width:90%;
+ margin:0 auto;
+ margin-top:10px;
+}
+.eachdoctor{
+  height:100px;
+  width:100%;
+  margin-top:10px;
+  border-radius: 5px;
+  background-color: #fff;
+	box-shadow: 2px 2px 5px #bbb;
+}
+.eachdoctor image{
+height:100%;
+width:120px;
+float:left;
+}
+.eachdoctor .info{
+   position: relative;
+  float:left;
+  height:100%;
+  width:420rpx;
+ 
+}
+.eachdoctor .name{
+   margin-top:10px;
+}
+.eachdoctor .duty{
+  margin-top:10px;
+  margin-left:20px;
+color:#bbb;
+}
+.eachdoctor .office{
+  position: absolute;
+bottom:20rpx;
+left:10rpx;
+font-size: 12px;
+}
+.eachdoctor .price{
+  position: absolute;
+  right:10px;
+  bottom: 10px;
+  font-size: 12px;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IOffice">
+     <select id="selectOffice" resultType="com.example.demo.entity.Office">
+        select * from office
+    </select>
+  <insert id="insertOffice" parameterType="com.example.demo.entity.Office">
+ insert into office(name,png,createtime) values (#{name},#{png},now())
+ </insert>
+    <delete id="deleteOffice" parameterType="Integer">
+        DELETE  FROM office where id=#{id}
+    </delete>
+  <select id="selectOfficeNameNoRepeat" resultType="String">
+      SELECT distinct name FROM office
+    </select>
+    <resultMap type="com.example.demo.entity.Course_teacher" id="course_teacher" >
+ <result property="name" column="name"/>
+ <result property="userid" column="userid"/>
+ <result property="school" column="school"/>
+ <result property="zy" column="zy"/>
+ <result property="bj" column="bj"/>
+ </resultMap>
+</mapper>

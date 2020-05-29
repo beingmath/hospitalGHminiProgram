@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IWork">
+ 
+    <select id="selectWork" resultType="com.example.demo.entity.Work" parameterType="com.example.demo.entity.Work">
+        select * from work where  lessonid=#{lessonid} and teachername = #{teachername}
+    </select>
+  <insert id="insertWork" parameterType="com.example.demo.entity.Work" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+ insert into work(teachername,lessonid,workname,begintime,endtime,content) values (#{teachername},#{lessonid},#{workname},#{begintime},#{endtime},#{content})
+ </insert>
+     <select id="selectWorkBylessonId" resultType="com.example.demo.entity.Work" parameterType="Integer">
+        select * from work where lessonid = #{lessonid}
+    </select>
+</mapper>

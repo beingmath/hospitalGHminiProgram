@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
+
+<script
+	src="https://unpkg.com/bootstrap-table@1.14.2/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="app">
+		<button class="btn btn-success" @click="tog" id="ab">添加课程</button>
+		<div class="contain" id="addCourse" v-show="add">
+			<div style="height: 100%; margin-top: 20px">
+				<p>
+					教材：<input type="text" style="margin-top: 5px" v-model.trim="name">
+				</p>
+				<p>
+					招生对象：学校： <select v-model="selectSchool" >
+						<option>请选择</option>
+						<option v-for="mate in matesd" v-cloak v-model="options">{{mate.school}}</option>
+					</select> 专业: <select v-model="selectZY">
+						<option>请选择</option>
+						<option v-for="mate in matesd" v-if="mate.school==selectSchool">{{mate.zy}}</option>
+						<option v-for="mate in matesd" v-if="'请选择'==selectSchool">{{mate.zy}}</option>
+					</select> 班级： <select v-model="selectBJ">
+						<option>请选择</option>
+						<option v-for="mate in matesd"
+							v-if="mate.school==selectSchool&&mate.zy==selectZY">{{mate.bjh}}</option>
+							<option v-for="mate in matesd"
+							v-if="'请选择'==selectSchool&&mate.zy==selectZY">{{mate.bjh}}</option>
+					</select>
+				</p>
+				<p>
+					课程描述：<input type="text" v-model="descri" style="margin-top: 5px">
+				</p>
+				<input type="submit" value="添加课程" class="btn btn-success btn-xs" @click="tjCourse">
+				<button @click="close" class="btn btn-success btn-xs">关闭</button>
+			</div>
+		</div>
+		<div class="contain" v-for="course in Course">
+			<div style="height: 100%; margin-top: 20px">
+				<img
+					src="http://nwzimg.wezhan.cn/contents/sitefiles2032/10161976/images/9409280.png"
+					style="width: 21px; height: 21px; display: inline-block" />
+				<p>教材：{{course.name}}</p>
+				<img
+					src="http://nwzimg.wezhan.cn/contents/sitefiles2032/10161976/images/9409283.png"
+					style="width: 21px; height: 21px; display: inline-block">
+				<p>招生对象：{{course.school+course.zy+course.bj}}</p>
+				<img
+					src="http://nwzimg.wezhan.cn/contents/sitefiles2032/10161976/images/9409282.png"
+					style="width: 21px; height: 21px; display: inline-block">
+				<p>课程描述：{{course.descri}}</p>
+			</div>
+		</div>
+	</div>
+</body>
+<style>
+body {
+	background-color: rgb(243, 243, 243);
+}
+.contain {
+	height: 150px;
+	width: 885px;
+	background-color: #fff;
+	box-shadow: 2px 2px 5px #bbb;
+}
+.contain:hover {
+	margin-top: 10px;
+	border-bottom: 4px solid #12ab59;
+	border-radius: 7px;
+}
+[v-cloak] {
+	display: none;
+}
+</style>
+<script>
+	new Vue({
+		el : '#app',
+		data:{
+		descri:'',
+		name:'',
+		flag:1,
+		Course:null,
+		options:null,
+		add:false,
+		selectSchool:'',
+		selectBJ:'',
+		selectZY:'',
+		matesd:null,
+		},
+		methods:{
+		tjCourse(){
+		if(this.name==''){
+		alert("请填写课程名!");
+		return;
+		}
+		axios.post('tjCourse', {
+    name:this.name,
+    school:this.selectSchool,
+    zy:this.selectZY,
+    bj:this.selectBJ,
+    descri:this.descri
+  })
+  .then(function (response) {
+    window.location.href="less.html";
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  },
+		//添加课程
+		tog(){
+		   var that=this;
+	      	if(that.flag>1){
+	     	this.add=true;
+		 			return;
+		 			}
+		 			$("select>option").each(function() {
+
+            text = $(this).text();
+            if(text=='请选择'){
+            return;
+            }
+            if($("select>option:contains("+text+")").length > 1)
+                $("select>option:contains("+text+"):gt(0)").remove();
+        });
+        	this.add=true;
+        this.flag=2;
+
+		},
+		//遍历数组
+		close(){
+		this.add=false;
+		},
+
+		},
+		mounted : function() {
+			var that = this;
+			axios.post('selectbj').then(function(response) {
+				that.matesd  = response.data;
+
+			}),
+
+	axios.post('selectCourse').then(function(response) {
+				that.Course  = response.data;
+			})
+		}
+
+	});
+</script>
+</html>

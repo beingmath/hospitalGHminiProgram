@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Insert title here</title>
+</head>
+<body>
+<div  id="app">
+<button class="btn btn-info" data-toggle="modal" data-target="#tModal">
+    添加医生</button>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">添加医生</h4>
+            </div>
+            <div class="modal-body">
+                <form action="addDoctor" enctype="multipart/form-data" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">医生姓名</span> <input type="text"
+                                                                           class="form-control" name="name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">医生职称</span> <input type="text"
+                                                                           class="form-control" name="major">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">医生诊费</span> <input type="text" @keyup="inputChange"
+                                                                           v-model="pageIndex"         class="form-control" name="price">
+                    </div><div class="input-group">
+                    <span class="input-group-addon">所属科室</span>
+                    <select name="office">
+                    <option v-for="office in OfficeName" :value="office">{{office}}</option>
+                </select>
+                </div>
+                    <div class="input-group">
+                    <span class="input-group-addon">医生照片</span> <input type="file"
+                                                                       class="form-control" name="png">
+                </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">医生简介</span> <input type="text"
+                                                                           class="form-control" name="intro">
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" />
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<table class="table table-bordered" style="text-align: center" >
+    <thead>
+    <tr>
+        <th>医生姓名</th>
+        <th>医生职称</th>
+        <th>医生诊费</th>
+        <th>所属科室</th>
+        <th>医生照片</th>
+        <th>医生简介</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="doctor in doctors" style="font-size:13px">
+        <td style="width:20%;height:120px">{{doctor.name}}</td>
+
+        <td style="width:12%;height:40px">{{doctor.major}}</td>
+        <th style="width:12%;height:40px">{{doctor.price}}</th>
+        <th style="width:12%;height:40px">{{doctor.office}}</th>
+        <td style="width:16%;height:40px"><img :src="'http://localhost:8000/doctorimage/'+doctor.png+''" style="height:100px"/></td>
+        <th style="width:20%;height:40px">{{doctor.intro}}</th>
+        <th style="width:20%;height:40px"><a :href="'deleteDoctor?id='+doctor.id+''">删除</a></th>
+    </tr>
+    </tbody>
+</table>
+    </div>
+</body>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            doctors : null,
+            OfficeName:[],
+            pageIndex:""
+        },
+        methods:{
+            inputChange:function() { //输入框值改变
+                this.pageIndex = this.pageIndex.replace(/[^\d]/g, '')
+            }
+        },
+        mounted : function() {
+            var that = this;
+            axios.post('selectdoctor').then(function(response) {
+                that.doctors = response.data
+            }),
+            axios.post('selectOfficeNameNoRepeat').then(function(responsed) {
+                    that.OfficeName = responsed.data
+                })
+        }
+    })
+</script>
+</html>

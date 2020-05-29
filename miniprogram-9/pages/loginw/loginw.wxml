@@ -1,0 +1,3 @@
+<!--pages/loginw/loginw.wxml-->
+<text>pages/loginw/loginw.wxml</text>
+<button bindtap="login" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即体验</button>

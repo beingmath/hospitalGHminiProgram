@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IUsertoMate">
+
+	<select id="selectBJCZ" resultType="com.example.demo.entity.Mate">
+		select * from mate where school=#{school} and zy=#{zy} and bjh=#{bjh}
+	</select>
+	<!-- 批处理插入数据 -->
+	<insert id="insertUsertoMate">
+		insert into mate_user(mateid,userid) values
+		<foreach collection="list" item="UsertoMate" separator=","
+			close=";">
+			(#{UsertoMate.mateid},#{UsertoMate.userid})
+		</foreach>
+	</insert>
+	<delete id="deleteUsertoMate">
+		delete from mate_user where mateid=#{mateid} and userid in
+		<foreach item="userid" collection="userids" open="("
+			separator="," close=")">
+		 #{userid}
+		</foreach>
+	</delete>
+	<select id="selectMtInfoByMateid"
+		resultType="com.example.demo.entity.Mate">
+		select * from mate where school=#{school} and zy=#{zy} and bjh=#{bjh}
+	</select>
+</mapper>

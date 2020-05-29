@@ -1,0 +1,28 @@
+/* pages/record/record.wxss */
+.bo1{
+  height:180px;
+  width:90%;
+  border-radius: 5px;
+  background-color: #fff;
+	box-shadow: 2px 2px 5px #bbb;
+  text-align: center;
+  margin: 10px auto;
+  border-top:1px solid #bbb;
+
+}
+.bo1 image{
+height:50px;
+width:50px;
+border-radius: 60px;
+background-color: #bbb;
+left:-80px;
+
+}
+.bo4{
+  height:130px;
+  width:80%;
+
+
+}
+
+

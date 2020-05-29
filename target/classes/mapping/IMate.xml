@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IMate">
+ 
+    <select id="seletMate" resultType="com.example.demo.entity.Mate">
+        select * from mate
+    </select>
+     <select id="selectBJCZ" resultType="com.example.demo.entity.Mate">
+        select * from mate where school=#{school} and zy=#{zy} and bjh=#{bjh}
+    </select>
+  <insert id="addMate" parameterType="com.example.demo.entity.Mate">
+ insert into mate(school,bjh,descri,zy) values (#{school},#{bjh},#{desc},#{zy})
+ </insert>
+  <select id="selectMtInfoByMateid" resultType="com.example.demo.entity.Mate">
+        select * from mate where id=#{id}
+    </select>
+     <select id="selectMateIdByMate" parameterType="com.example.demo.entity.Mate" resultType="java.lang.Integer">
+        select id from mate
+           <where>
+      <if test="zy!= null and zy !='' ">
+        and  zy=#{zy}
+           </if>
+      <if test="bjh!= null and bjh !='' ">
+    and  bjh=#{bjh}
+     </if>
+       <if test="school!=null and school !='' ">
+     and school=#{school}
+       </if>
+ </where>
+    </select>
+</mapper>

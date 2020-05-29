@@ -1,0 +1,7 @@
+<!--pages/announ/announ.wxml-->
+<view style="width:90%;margin:0 auto">
+<image src="{{webtop2+announ.png}}"></image>
+</view>
+<view style="width:90%;margin:0 auto;white-space:pre-line">
+{{announ.details}}
+</view>

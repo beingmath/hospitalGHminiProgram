@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IPageannoun">
+     <select id="selectPageannoun" resultType="com.example.demo.entity.Pageannoun">
+        select * from pageannoun
+    </select>
+  <insert id="addPageannoun" parameterType="com.example.demo.entity.Pageannoun">
+ insert into pageannoun(details,png) values (#{details},#{png})
+ </insert>
+    <delete id="deletePageannoun" parameterType="Integer">
+        delete from pageannoun where  id=#{id}
+    </delete>
+</mapper>

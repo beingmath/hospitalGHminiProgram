@@ -1,0 +1,15 @@
+/* pages/office/office.wxss */
+.offices{
+
+  width:82%;
+  margin:0 auto;
+}
+.eachoffice{
+  height:120px;
+  width:100px;
+  float:left;
+}
+.eachoffice image{
+  height:50px;
+  width:50px;
+}

@@ -1,0 +1,25 @@
+<view class='page_row'>
+    <view class="search">
+      <view class="df search_arr">
+        <icon class="searchcion" size='20' type='search'></icon>
+        <input type="text" placeholder="请输入你要搜索的医生姓名" bindinput="getSearchVal"       bindconfirm="searchFun"/>
+      </view>
+    </view>
+  </view>
+<swiper autoplay indicator-dots indicator-color="white" indicator-active-color="grey" interval="3000" circular>
+<swiper-item wx:for="{{pageannoun}}">
+<image bindtap="announ" data-index="{{index}}" src="{{webtop2+item.png}}" style="background-size: 100% 100%;" ></image></swiper-item>
+
+</swiper>
+<view class="more">相关医生<navigator url="../reldoctor/reldoctor">更多 ></navigator></view>
+<view class="doctors">
+<view class="eachdoctor" wx:for="{{doctors}}" wx:key="index" bindtap="doctInfo" data-id="{{item.id}}">
+<image src="{{webtop+item.png}}"></image>
+<view class="info">
+<text class="name">{{item.name}}</text>
+<text class="duty">{{item.major}}</text>
+<text class="office">{{item.office}}</text>
+<text class="price">￥{{item.price}}</text>
+</view>
+</view>
+</view>

@@ -1,0 +1,45 @@
+<!--pages/txInfo/txInfo.wxml-->
+<view class="bo1">
+<view class="a">
+<text >挂号诊疗费</text>
+<text class="right" style="float:right;color:orange">{{doctor.price}}元</text>
+</view>
+<view class="a">
+<text >科室</text>
+<text  class="right" style="float:right">{{doctor.office+'('+doctor.major+')'}}</text>
+</view>
+<view class="a">
+<text >医生</text>
+<text  class="right" style="float:right">{{doctor.name}}</text>
+</view>
+<view class="a">
+<text >预约时间</text>
+<text  class="right" style="float:right">{{date+'  '+time}}</text>
+</view>
+</view>
+<view class="bo2">
+<view class="a">
+<text >姓名</text>
+<input style="float:right;width:30%" placeholder="请输入姓名" bindinput ="nameInput"/>
+</view>
+<view class="a">
+<text >出生日期</text>
+<text class="right" style="float:right;color:orange"></text>
+<view style="float:right;color:grey">
+  <picker mode="date" value="{{birth}}"  bindchange="bindBirthChange">
+    <view class="picker" style="color:#ff4757">
+  <text wx:if="{{birth===''}}"> 请选择出生日期:</text> {{birth}}
+    </view>
+  </picker>
+</view>
+</view>
+<view class="a">
+<text >手机号码</text>
+<input style="float:right;width:38%" placeholder="请输入手机号码" type="number"
+bindinput ="phoneInput"
+/>
+</view>
+</view>
+<button style="border-radius:50px;margin-top:20rpx;color:white;  background-image:linear-gradient(120deg,#3742fa,#74b9ff);" bindtap="torecord">
+提交预约
+</button>

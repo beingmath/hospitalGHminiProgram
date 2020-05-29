@@ -1,0 +1,30 @@
+/* pages/doctorInfo/doctorInfo.wxss */
+
+.bo1{
+  height:280px;
+  width:90%;
+  margin-top:10px;
+  border-radius: 5px;
+  background-color: #fff;
+	box-shadow: 2px 2px 5px #bbb;
+  text-align: center;
+  margin: 0 auto;
+  border-top:1px solid #bbb;
+}
+.bo1 image{
+height:30%;
+width:120px;
+border-radius: 100px;
+background-color: #bbb
+}
+.na{
+  margin-top:20px
+}
+.bo2{
+  height:80px;
+  width:90%;
+  margin:0 auto;
+  	box-shadow: 2px 2px 5px #bbb;
+    margin-top:20rpx;
+      padding-top:20px
+}

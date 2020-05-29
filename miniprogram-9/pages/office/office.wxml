@@ -1,0 +1,9 @@
+
+<view class="offices">
+<view class="eachoffice" wx:for="{{offices}}" wx:key="index" bindtap="redict">
+<image src="{{webtop+item.png}}"></image>
+<view>{{item.name}}</view>
+</view>
+
+
+</view>

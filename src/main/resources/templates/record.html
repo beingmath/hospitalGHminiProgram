@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Insert title here</title>
+</head>
+<body>
+
+<table class="table table-bordered" id="app" style="text-align: center">
+    <thead>
+    <tr>
+        <th>预约编号</th>
+        <th>openid</th>
+        <th>科室</th>
+        <th>医生姓名</th>
+        <th>诊费</th>
+        <th>病人名称</th>
+        <th>手机号</th>
+        <th>生日</th>
+        <th>预约时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="record in records" style="font-size:13px">
+        <td style="height:60px"><p>{{record.id}}</p></td>
+        <td style="height:60px">{{record.openid}}</td>
+        、 <td style="height:60px">{{record.doctor.office}}</td>
+        <td style="height:60px">{{record.doctor.name}}</td>
+        <td style="height:60px">{{record.doctor.price}}</td>
+        <td style="height:60px">{{record.patientName}}</td>
+        <td style="height:60px">{{record.phone}}</td>
+        <td style="height:60px">{{record.birth}}</td>
+        <td style="height:60px">{{record.time}}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">添加科室</h4>
+            </div>
+            <div class="modal-body">
+                <form action="addOffice" enctype="multipart/form-data" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">科室名称</span> <input type="text"
+                                                                           class="form-control" name="name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">科室图标</span> <input type="file"
+                                                                           class="form-control" name="png">
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" />
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+</body>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            records : null
+        },
+        mounted : function() {
+            var that = this;
+            axios.post('selectAllRecord').then(function(response) {
+                that.records = response.data
+            })
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
+
+<script
+	src="https://unpkg.com/bootstrap-table@1.14.2/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="app">
+<a href="javascript:;" id="apps" v-for="less in lesson">
+<div>
+<img width="236" height="136" src="https://edu-image.nosdn.127.net/61eadd8a1d514ac0b73fdfff0fa878eb.png">
+</div>
+<div>
+<span>{{less.name}}</span>
+</div>
+<div>
+<span>{{less.school}}{{less.zy}}{{less.bj}}</span>
+</div>
+</a>
+</div>
+<br>
+	<button class="btn btn-info" data-toggle="modal" data-target="#tModal">
+		添加学生或老师</button>
+	<button class="btn btn-info" id="delete">
+		删除</button>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">添加学生或老师</h4>
+				</div>
+				<div class="modal-body">
+					<div id="toolbar">
+						<div class="btn btn-primary" id="add">添加</div>
+					</div>
+					<table id="mytab" class="table table-hover"></table>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<table id="matetab" class="table table-hover"></table>
+</body>
+<script>
+	$("#add").click(function() {
+		var str = window.location.href;
+	var 	mateid = str.charAt(str.length - 1);
+		var ids = [];
+		var h = $('#mytab').bootstrapTable('getAllSelections');
+		if (h.length == 0) {
+			return;
+		}
+		ids.push(mateid);
+		for (var i = 0; i < h.length; i++) {
+			ids.push(h[i].id);
+		}
+		$.ajax({
+			url : 'addPertoMate',
+			data : {
+				ids : JSON.stringify(ids)
+			},
+			contentType : "application/json; charset=utf-8",
+			success : function() {
+				window.location.href = "mateinfo.html?id" + mateid;
+			}
+		});
+	})
+	$("#delete").click(function() {
+		var str = window.location.href;
+		var mateid = str.charAt(str.length - 1);
+		var ids = [];
+		var h = $('#matetab').bootstrapTable('getAllSelections');
+		if (h.length == 0) {
+			alert("至少选择一条!");
+			return;
+		}
+		ids.push(mateid);
+		for (var i = 0; i < h.length; i++) {
+			ids.push(h[i].id);
+		}
+		$.ajax({
+			url : 'deletePertoMate',
+			data : {
+				ids : JSON.stringify(ids)
+			},
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+			alert("删除成功!");
+				window.location.href = "mateinfo.html?id" + mateid;
+			}
+		});
+	})
+	function infoFormatter(value, row, index) {
+		return row.role == 1 ? '老师' : '学生';
+	}
+	$(function() {
+		var str = window.location.href;
+		var mateid = str.charAt(str.length - 1);
+		$('#matetab')
+				.bootstrapTable(
+						{
+							url : "http://localhost:8000/jsp/selectMateInfo?mateid="
+									+ mateid,//数据源
+							dataField : "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+							pageNumber : 1,
+							search : true,//是否搜索
+							pagination : true,//是否分页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20 ],//分页步进值
+							sidePagination : "client",//服务端分页
+							contentType : "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+							dataType : "json",//期待返回数据类型
+							method : "post",//请求方式
+							searchAlign : "left",//查询框对齐方式
+							queryParamsType : "limit",//查询参数组织方式
+							searchOnEnterKey : false,//回车搜索
+							showRefresh : true,//刷新按钮
+							showColumns : true,//列选择按钮
+							buttonsAlign : "left",//按钮对齐方式
+							toolbarAlign : "right",//工具栏对齐方式
+							columns : [ {
+								title : "全选",
+								field : "select",
+								checkbox : true,
+								width : 20,//宽度
+								align : "center",//水平
+								valign : "middle"//垂直
+							}, {
+								title : "ID",//标题
+								field : "id",//键名
+								sortable : true,//是否可排序
+								order : "desc"//默认排序方式
+							}, {
+								field : "name",
+								title : "姓名",
+								sortable : true,
+								titleTooltip : "this is name"
+							}, {
+								field : "role",
+								title : "角色",
+								sortable : true,
+								formatter : 'infoFormatter',
+							}, {
+								field : "school",
+								title : "学校",
+								sortable : true,
+							}, {
+								field : "zy",
+								title : "专业",
+								sortable : true,
+							}, {
+								field : "mate",
+								title : "班级",
+								sortable : true,
+							} ],
+							onClickRow : function(row, $element) {
+								//$element是当前tr的jquery对象
+								$element.css("background-color", "grey");
+							},//单击row事件
+							locale : "zh-CN", //中文支持
+							detailView : false, //是否显示详情折叠
+						});
+	})
+	$('#mytab').bootstrapTable({
+		url : "http://localhost:8000/jsp/selectUserInfo",//数据源
+		dataField : "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+		pageNumber : 1,
+		search : true,//是否搜索
+		pagination : true,//是否分页
+		pageSize : 2,//单页记录数
+		pageList : [ 1, 2, 3, 4 ],//分页步进值
+		sidePagination : "client",//服务端分页
+		contentType : "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+		dataType : "json",//期待返回数据类型
+		method : "post",//请求方式
+		searchAlign : "left",//查询框对齐方式
+		queryParamsType : "limit",//查询参数组织方式
+		searchOnEnterKey : false,//回车搜索
+		showRefresh : true,//刷新按钮
+		showColumns : true,//列选择按钮
+		buttonsAlign : "left",//按钮对齐方式
+		toolbar : "#toolbar",//指定工具栏
+		toolbarAlign : "right",//工具栏对齐方式
+		columns : [ {
+			title : "全选",
+			field : "select",
+			checkbox : true,
+			width : 20,//宽度
+			align : "center",//水平
+			valign : "middle"//垂直
+		}, {
+			title : "ID",//标题
+			field : "id",//键名
+			sortable : true,//是否可排序
+			order : "desc"//默认排序方式
+		}, {
+			field : "name",
+			title : "姓名",
+			sortable : true,
+			titleTooltip : "this is name"
+		}, {
+			field : "role",
+			title : "角色",
+			formatter : 'infoFormatter',
+		} ],
+		onClickRow : function(row, $element) {
+			//$element是当前tr的jquery对象
+			$element.css("background-color", "grey");
+		},//单击row事件
+		locale : "zh-CN", //中文支持
+		detailView : false, //是否显示详情折叠
+	});
+
+	new Vue({
+el:'#app',
+data:{
+lesson:null
+},
+	mounted : function() {
+		var str = window.location.href;
+		var mateid = str.charAt(str.length - 1);
+			var that = this;
+			axios.post('selectMateCourse?mateid='+mateid).then(function(response) {
+				that.lesson = response.data
+			})
+		}
+});
+</script>
+
+<style>
+#apps{
+display:inline-block;
+background-color: rgb(255, 255, 255);
+text-decoration:none;
+width:236px;
+height:180px;
+color:black;
+margin-left:20px;
+margin-top:10px;
+}
+body{
+background-color: rgb(243, 243, 243);
+
+}
+</style>
+
+</html>

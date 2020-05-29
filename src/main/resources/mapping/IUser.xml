@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IUser">
+ 
+    <select id="selectUser" resultType="com.example.demo.entity.User" parameterType="com.example.demo.entity.User">
+        select * from user_new where id = #{id}
+    </select>
+  <insert id="insertUser" parameterType="com.example.demo.entity.User">
+ insert into user_new(id,role,pw) values (#{id},#{role},#{pw})
+ </insert>
+     <select id="selectPers" resultType="com.example.demo.entity.User">
+        select * from user_new 
+    </select>
+    <select id="selectUserInfo" resultType="com.example.demo.entity.User">
+        select * from user_new where school='' or school is NULL;
+    </select>
+    <select id="selectMateInfo" resultType="com.example.demo.entity.User" parameterType="Integer">
+       SELECT un.* FROM mate_user mu,user_new un where mu.userid=un.id and  mu.mateid=#{mateid};
+    </select>
+      <update id="updateInfo" parameterType="com.example.demo.entity.User">
+    update user_new set name=#{name},pw=#{pw},mate=#{mate},school=#{school},zy=#{zy},role=#{role} where id=#{id}
+    </update>
+    <!-- 批处理 完善信息-->
+      <update id="commpleteUserInfo">
+       <foreach collection="list" item="User"  separator=";">
+    update user_new set 
+    mate=#{User.mate},school=#{User.school},zy=#{User.zy} where id=#{User.id}
+    </foreach>
+    </update>
+     <!-- 批处理 删除信息-->
+      <update id="updateUserInfo">
+    update user_new set 
+    mate='',school='',zy='' where id in
+    <foreach collection="list" item="userid"  open="(" separator="," close=")">
+    #{userid}
+    </foreach>
+    </update>
+</mapper>

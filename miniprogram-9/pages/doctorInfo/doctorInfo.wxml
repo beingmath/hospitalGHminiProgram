@@ -1,0 +1,33 @@
+<!--pages/doctorInfo/doctorInfo.wxml-->
+<view class="bo1">
+<image src="{{webtop+doctor.png}}" ></image>
+<view class="na" >{{doctor.name+"("+doctor.major+")"}}</view>
+<view class="na" >{{doctor.office}}</view>
+<view class="na" >{{doctor.intro}}</view>
+</view>
+<view class="bo2">
+<view class="riqi">
+<text class="left">预约日期</text>
+
+<view style="float:right;color:grey">
+  <picker mode="date" value="{{date}}" start="{{date}}"  bindchange="bindDateChange">
+    <view class="picker" style="color:#ff4757">
+   请选择 >: {{date}}
+    </view>
+  </picker>
+</view>
+</view>
+<view class="sj">
+<text class="left">预约时间</text>
+<view style="float:right;color:grey">
+  <picker mode="time" value="{{time}}" start="09:00" end="21:00" bindchange="bindTimeChange">
+    <view class="picker" style="color:#ff4757">
+     请选择 >: {{time}}
+    </view>
+  </picker>
+</view>
+</view>
+</view>
+<button style="border-radius:50px;margin-top:20rpx;color:white;  background-image:linear-gradient(120deg,#3742fa,#74b9ff);" bindtap="click">
+立即预约
+</button>

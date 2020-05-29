@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>s</title>
+    <link rel="stylesheet" href="../js/bootstrap.min.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+     <script src="../js/axios.min.js"></script>
+</head>
+<body >
+<div id="myCarousel">
+<button class="btn btn-info" data-toggle="modal" data-target="#tModal">
+    增加首页轮播图和公告</button>
+<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">添加首页轮播图和公告</h4>
+            </div>
+            <div class="modal-body">
+                <form action="addPageannoun"  enctype="multipart/form-data" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">公告详情</span> <textarea  rows="10" cols="30"
+                             name="details" ></textarea>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">轮播图片</span> <input type="file"
+                                                                           class="form-control" name="png" >
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" />
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<table class="table table-bordered" style="text-align: center" >
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>首页图片</th>
+        <th>公告详情</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="Pageannoun in Pageannouns" style="font-size:13px">
+        <td style="width:20%;height:120px">{{Pageannoun.id}}</td>
+        <td style="width:16%;height:40px"><img :src="'http://localhost:8000/circleimage/'+Pageannoun.png+''" style="height:100px"/></td>
+        <th style="width:20%;height:40px"><div style="height:100px;overflow:hidden" :title="Pageannoun.details">{{Pageannoun.details}}</div></th>
+        <th style="width:20%;height:40px"><a :href="'deletePageannoun?id='+Pageannoun.id+''">删除</a></th>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+<script>
+new Vue({
+    el:"#myCarousel",
+    data:{
+        Pageannouns:[]
+    } ,
+    mounted : function() {
+    var that = this;
+    axios.post('selectPageannoun').then(function(response) {
+        that.Pageannouns = response.data
+    })
+}
+})
+
+</script>
+</html>

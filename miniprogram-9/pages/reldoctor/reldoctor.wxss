@@ -1,0 +1,62 @@
+/* pages/reldoctor/reldoctor.wxss */
+.nav{
+  white-space:nowrap;
+  padding: 5rpx 0;
+}
+.nav_item{
+  padding: 10rpx 30rpx;
+  font-size:27rpx;
+  display: inline-block;
+}
+.active{
+  background-image:linear-gradient(120deg,#3742fa,#74b9ff);
+  border-radius:40rpx;
+  color:white;
+}
+.doctors{
+  width:90%;
+  height:100px;
+ margin:0 auto;
+
+ margin-top:10px;
+}
+.eachdoctor{
+  height:100px;
+  width:100%;
+  margin-top:10px;
+  border-radius: 5px;
+  background-color: #fff;
+	box-shadow: 2px 2px 5px #bbb;
+}
+.eachdoctor image{
+height:100%;
+width:120px;
+float:left;
+}
+.eachdoctor .info{
+   position: relative;
+  float:left;
+  height:100%;
+  width:420rpx;
+ 
+}
+.eachdoctor .name{
+   margin-top:10px;
+}
+.eachdoctor .duty{
+  margin-top:10px;
+  margin-left:20px;
+color:#bbb;
+}
+.eachdoctor .office{
+  position: absolute;
+bottom:20rpx;
+left:10rpx;
+font-size: 12px;
+}
+.eachdoctor .price{
+  position: absolute;
+  right:10px;
+  bottom: 10px;
+  font-size: 12px;
+}

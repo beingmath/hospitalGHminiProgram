@@ -1,0 +1,32 @@
+<!--pages/record/record.wxml-->
+<view class="bo1" wx:for="{{records}}" wx:for-item="record" >
+<view class="doctor" style="border-bottom:1px solid #bdc3c7">
+<image src="{{webtop+record.doctor.png}}" bindtap="reset" data-id="{{record.id}}"></image>
+<view class="info">
+<text class="name">{{record.doctor.name+'('+record.doctor.major+')'}}</text>
+<text class="office">{{record.doctor.office}}</text>
+</view>
+</view>
+<view class="bo4">
+<view class="a">
+<text >费用</text>
+<text class="right" style="float:right;color:orange">{{record.doctor.price}}元</text>
+</view>
+<view class="a">
+<text >就诊人</text>
+<text  class="right" style="float:right">{{record.patientName}}</text>
+</view>
+<view class="a">
+<text >联系电话</text>
+<text  class="right" style="float:right">{{record.phone}}</text>
+</view>
+<view class="a">
+<text >出生日期</text>
+<text  class="right" style="float:right">{{record.birth}}</text>
+</view>
+<view class="a">
+<text >就诊时间</text>
+<text  class="right" style="float:right">{{record.time}}</text>
+</view>
+</view>
+</view>

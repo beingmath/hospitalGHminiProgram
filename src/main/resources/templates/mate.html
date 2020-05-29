@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<button class="btn btn-info" data-toggle="modal" data-target="#tModal">
+		添加班级</button>
+	<button class="btn btn-info" data-toggle="modal" data-target="#dModal">
+		删除班级</button>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">添加班级</h4>
+				</div>
+				<div class="modal-body">
+					<form action="addbj">
+						<div class="input-group">
+							<span class="input-group-addon">学校</span> <input type="text"
+								class="form-control" name="school">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon">班级号</span> <input type="text"
+								class="form-control" name="bjh">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon">描述</span> <input type="text"
+								class="form-control" name="desc">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon">专业</span> <input type="text"
+								class="form-control" name="zy">
+						</div>
+
+						<div class="modal-footer">
+							<input type="submit" class="btn btn-primary" />
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">关闭</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<table class="table table-hover" id="app">
+		<thead>
+			<tr>
+				<th>学校</th>
+				<th>班级号</th>
+				<th>专业</th>
+				<th>描述</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="mate in info">
+				<td>{{mate.school}}</td>
+				<td>{{mate.bjh}}</td>
+				<td>{{mate.zy}}</td>
+				<td>{{mate.desc}}</td>
+				<th><a :href="'mateinfo.html?id='+mate.id+''"
+					>查看</a></th>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<script>
+	new Vue({
+		el : '#app',
+		data : {
+			info : null
+		},
+		mounted : function() {
+			var that = this;
+			axios.post('selectbj').then(function(response) {
+				that.info = response.data
+			})
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Insert title here</title>
+</head>
+<body>
+<div id="app">
+<button class="btn btn-info" data-toggle="modal" data-target="#tModal">
+    添加科室</button>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="tModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">添加科室</h4>
+            </div>
+            <div class="modal-body">
+                <form action="addOffice" enctype="multipart/form-data" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">科室名称</span> <input type="text"
+                                                                           class="form-control" name="name" :value="filename">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">科室图标</span> <input type="file"
+                                                                           class="form-control" name="png"  ref="file" v-on:change="handleFileUpload($event)">
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" />
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<table class="table table-bordered"  style="text-align: center">
+    <thead>
+    <tr>
+        <th>科室名称</th>
+        <th>科室图标</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="office in offices" style="font-size:13px">
+        <td style="width:20%;height:60px">{{office.name}}</td>
+        <td style="width:20%;height:60px"><img :src="'http://localhost:8000/officeimage/'+office.png+''" style="height:60px"/></td>
+        <td style="width:20%;height:60px">{{office.createtime}}</td>
+        <th style="width:20%;height:60px"><a :href="'deleteOffice?id='+office.id+''">删除</a></th>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            offices : null,
+            filename:""
+        },
+        mounted : function() {
+            var that = this;
+            axios.post('selectOffice').then(function(response) {
+                that.offices = response.data
+            })
+        },
+        methods:{
+            handleFileUpload:function(event){
+                event.preventDefault();
+                this.file = this.$refs.file.files[0];
+                if(this.file.name==undefined){
+                    this.filename="";
+                    return;
+                }
+                this.filename= this.file.name.substring(0, this.file.name.lastIndexOf("."))
+            },
+        }
+    })
+</script>
+</html>

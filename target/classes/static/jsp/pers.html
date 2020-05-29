@@ -1,0 +1,150 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>-->
+<!--<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>-->
+<!--<link rel="stylesheet"-->
+	<!--href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
+<!--<script-->
+	<!--src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--<title>Insert title here</title>-->
+<!--</head>-->
+<!--<body>-->
+	<!--<div class="btn-group btn-group-lg">-->
+		<!--<button type="button" class="btn btn-default" data-toggle="modal"-->
+			<!--data-target="#tjpersonModal">添加人员信息</button>-->
+		<!--<button type="button" class="btn btn-default">删除人员信息</button>-->
+		<!--<div class="container">-->
+			<!--<div class="input-group">-->
+				<!--<input type="text" class="form-control input-lg"><span-->
+					<!--class="input-group-addon btn btn-primary">搜索</span>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="modal fade" id="tjpersonModal" tabindex="-1" role="dialog"-->
+			<!--aria-labelledby="myModalLabel" aria-hidden="true">-->
+			<!--<div class="modal-dialog">-->
+				<!--<div class="modal-content">-->
+					<!--<div class="modal-header">-->
+						<!--<button type="button" class="close" data-dismiss="modal"-->
+							<!--aria-hidden="true">×</button>-->
+						<!--<h4 class="modal-title" id="myModalLabel">添加人员信息</h4>-->
+					<!--</div>-->
+					<!--<div class="modal-body">-->
+						<!--<form action="addper" method="post">-->
+							<!--<div class="input-group">-->
+								<!--<span class="input-group-addon">登录账号</span> <input type="text"-->
+									<!--class="form-control" name="id">-->
+							<!--</div>-->
+								 <!--<input type="radio" name="role" value="0" checked>学生-->
+								 <!--<input type="radio" name="role" value="1">老师-->
+							<!--<div class="input-group">-->
+								<!--<span class="input-group-addon">密码</span> <input type="text"-->
+									<!--class="form-control" name="pw">-->
+							<!--</div>-->
+
+							<!--<div class="modal-footer">-->
+								<!--<input type="submit" class="btn btn-primary" />-->
+								<!--<button type="button" class="btn btn-default"-->
+									<!--data-dismiss="modal">关闭</button>-->
+							<!--</div>-->
+						<!--</form>-->
+					<!--</div>-->
+
+				<!--</div>-->
+				<!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
+			<!--</div>-->
+			<!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<table class="table table-hover" id="app">-->
+		<!--<thead>-->
+			<!--<tr>-->
+				<!--<th>学号</th>-->
+				<!--<th>姓名</th>-->
+				<!--<th>密码</th>-->
+				<!--<th>学校</th>-->
+				<!--<th>班级</th>-->
+				<!--<th>专业</th>-->
+				<!--<th>角色</th>-->
+				<!--<th>操作</th>-->
+			<!--</tr>-->
+		<!--</thead>-->
+		<!--<tbody>-->
+			<!--<tr v-for="mate in info">-->
+				<!--<th><p>{{mate.id}}</p></th>-->
+				<!--<th><p contenteditable="true">{{mate.name}}</p></th>-->
+				<!--<th><p contenteditable="true">{{mate.pw}}</p></th>-->
+				<!--<th><p >{{mate.school}}</p></th>-->
+				<!--<th><p >{{mate.mate}}</p></th>-->
+				<!--<th><p >{{mate.zy}}</p></th>-->
+				<!--<th><select>-->
+						<!--<option value="0" v-if="mate.role==0" selected=true>学生</option>-->
+						<!--<option value="1" v-else>老师</option>-->
+						<!--<option value="1" v-if="mate.role==0">老师</option>-->
+						<!--<option value="0" v-else>学生</option>-->
+				<!--</select></th>-->
+				<!--<th><p class="update" style="cursor: pointer; color: blue">提交修改</p></th>-->
+			<!--</tr>-->
+		<!--</tbody>-->
+	<!--</table>-->
+<!--</body>-->
+<!--<script>-->
+	<!--//提交修改信息-->
+	<!--$(document).on(-->
+			<!--"click",-->
+			<!--".update",-->
+			<!--function() {-->
+				<!--var $id = $(this).parents('tr').find("th").eq(0).find("p")-->
+						<!--.text();-->
+				<!--var $name = $(this).parents('tr').find("th").eq(1).find("p")-->
+						<!--.text();-->
+				<!--var $pw = $(this).parents('tr').find("th").eq(2).find("p")-->
+						<!--.text();-->
+				<!--var $school = $(this).parents('tr').find("th").eq(3).find("p")-->
+						<!--.text();-->
+				<!--var $mate = $(this).parents('tr').find("th").eq(4).find("p")-->
+						<!--.text();-->
+				<!--var $zy = $(this).parents('tr').find("th").eq(5).find("p")-->
+						<!--.text();-->
+				<!--var $role = $(this).parents('tr').find("th").eq(6).find(-->
+						<!--"select option:selected").val();-->
+				<!--$.ajax({-->
+					<!--type : "post",-->
+					<!--url : "updateinfo",-->
+					<!--data : {-->
+						<!--id : $id,-->
+						<!--name : $name,-->
+						<!--pw : $pw,-->
+						<!--school : $school,-->
+						<!--mate : $mate,-->
+						<!--zy : $zy,-->
+						<!--role : $role-->
+					<!--},-->
+					<!--dataType : "json",-->
+					<!--success : function(data) {-->
+							<!--alert("提交成功");-->
+					<!--}-->
+				<!--})-->
+			<!--});-->
+
+	<!--new Vue({-->
+		<!--el : '#app',-->
+		<!--data : {-->
+			<!--info : null,-->
+		<!--},-->
+		<!--mounted : function() {-->
+			<!--var that = this;-->
+			<!--axios.post('selectper').then(function(response) {-->
+				<!--that.info = response.data-->
+			<!--})-->
+		<!--},-->
+		<!--methods : {-->
+			<!--updateperinfo : function(mate) {-->
+
+			<!--}-->
+		<!--}-->
+	<!--})-->
+<!--</script>-->
+<!--</html>-->

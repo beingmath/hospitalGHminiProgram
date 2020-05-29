@@ -1,0 +1,25 @@
+ <!--pages/reldoctor/reldoctor.wxml-->
+<view class="nav_wrap">
+<scroll-view class="nav" scroll-x="true" >
+<view class="nav_item {{-1===currentIndex?'active':''}}" wx:key="-1" bindtap="clicknav" data-index="{{-1}}" data-office="">
+全部
+</view>
+<view class="nav_item {{index===currentIndex?'active':''}}"
+ wx:for="{{navList}}" wx:key="index" bindtap="clicknav" data-index="{{index}}" data-office="{{item}}">
+{{item}}
+</view>
+</scroll-view>
+
+</view>
+
+<view class="doctors">
+<view class="eachdoctor" bindtap="doctInfo" data-id="{{item.id}}" wx:for="{{doctors}}" wx:key="index" wx:if="{{(office===item.office)||(office==='')}}" >
+<image src="{{webtop+item.png}}"></image>
+<view class="info">
+<text class="name">{{item.name}}</text>
+<text class="duty">{{item.major}}</text>
+<text class="office">{{item.office}}</text>
+<text class="price">￥{{item.price}}</text>
+</view>
+</view>
+</view>

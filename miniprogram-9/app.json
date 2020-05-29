@@ -1,0 +1,45 @@
+{
+  "pages": [
+        "pages/index/index",
+    "pages/office/office",
+  "pages/txInfo/txInfo",
+  "pages/record/record",
+    "pages/index3/index3",
+        "pages/reldoctor/reldoctor",
+    "pages/index2/index2",
+    "pages/doctorlist/doctorlist",
+      "pages/doctorInfo/doctorInfo",
+    "pages/me/me",
+    "pages/announ/announ"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+"tabBar": {
+  "list": [
+    {
+      "pagePath": "pages/index/index",
+      "iconPath": "icons/home.png",
+      "text": "首页",
+      "selectedIconPath": "icons/home_1.png"
+    },
+    {
+      "pagePath": "pages/office/office",
+      "iconPath": "icons/5.png",
+      "text": "科室",
+      "selectedIconPath": "icons/9.png"
+    },
+    {
+      "pagePath": "pages/me/me",
+      "iconPath": "icons/11.png",
+      "text": "我的",
+      "selectedIconPath": "icons/10.png"
+    }
+  ]
+},
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

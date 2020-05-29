@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HOMEWORK  SYSTEM</title>
+<script src="jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+<form action="Login" class="login-form" method="post">
+<h1>HOMEWORK  SYSTEM</h1>
+<div class="txtb">
+<input type="text" name="name">
+<span data-placeholder="Username"></span>
+</div>
+<div class="txtb">
+<input type="password" name="password">
+<span data-placeholder="Password"></span>
+</div>
+<input type="submit" class="logbtn1" value="Login">
+<div class="bottom-text">Don't hava account?<a href="register.html">Sign up</a></div>
+</form>
+<div class="mask_bg"></div>
+<script type="text/javascript">
+$(".txtb input").on("focus",function(){
+	$(this).addClass("focus");
+});
+$(".txtb input").on("blur",function(){
+	if($(this).val()=="")
+	$(this).removeClass("focus");
+});
+</script>
+</body>
+</html>
