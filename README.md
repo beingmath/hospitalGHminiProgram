@@ -1,0 +1,6 @@
+# hospitalGHminiProgram
+医院挂号小程序
+
+
+miniprogram-9文件夹下得代码为微信小程序端的代码
+其他的文件是web管理界面的代码和使用java开发的后台服务器代码
